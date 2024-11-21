@@ -23,3 +23,46 @@ enum class Halaman{
 }
 
 @Composable
+fun Navigasi(
+    modifier: Modifier,
+    viewModel: MahasiswaViewModel = viewModel(),
+    navHost: NavHostController = rememberNavController()
+) {
+    Scaffold { isipadding ->
+        val uiState by viewModel.dataModel.collectAsState()
+        NavHost(
+            modifier = modifier.padding(isipadding),
+            navController = navHost,
+            startDestination = Halaman.Form.name
+        ) {
+
+            composable(route = Halaman.Form.name) {
+                val konteks = LocalContext.current
+                FormulirMahasiswaView(
+                    listgender = ListGender.listGender.map { id ->
+                        konteks.getString(id)
+                    },
+                    onClickButton = {
+                        viewModel.saveDataMhs(it)
+                        navHost.navigate(Halaman.Data.name)
+                    }
+                )
+            }
+            composable(route = Halaman.Data.name)
+            {
+                DetailMahasiswaView(
+                    dataMhs = uiState,
+                    modifier = Modifier,
+                    onBackButtonClicked = {
+                        navHost.popBackStack()
+                    }
+                )
+            }
+
+        }
+
+
+    }
+
+}
+
