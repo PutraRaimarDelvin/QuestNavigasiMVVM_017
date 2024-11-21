@@ -50,3 +50,21 @@ fun DetailMahasiswaView(
     }
 }
 
+@Composable
+fun DetailMhs(
+    judul: String,
+    Isi : String,
+){
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+    ){
+        Text(judul,
+            modifier = Modifier.weight(0.8f))
+        Text(":",
+            modifier = Modifier.weight(0.1f))
+        Text(Isi,
+            modifier = Modifier.weight(2f))
+    }
+}
