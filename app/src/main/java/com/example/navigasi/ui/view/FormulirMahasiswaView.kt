@@ -30,5 +30,84 @@ fun FormulirMahasiswaView(
     listgender: List<String>,
     onClickButton: (MutableList<String>) -> Unit
 ){
+    var nama by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var nohp by remember { mutableStateOf("") }
+    var alamat by remember { mutableStateOf("") }
+    var jeniskelamin by remember { mutableStateOf("") }
+    var listData : MutableList<String> = mutableListOf(nama,jeniskelamin, email, nohp, alamat)
 
+    Column (modifier = modifier.fillMaxSize().padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally){
+        Text("BIO",
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp)
+        Spacer(modifier = Modifier.padding(20.dp))
+        TextField(
+            value = nama,
+            onValueChange = {nama = it},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
+            label = { Text("Name") },
+            placeholder = {
+                Text("Masukkan Nama Anda!", color = Color.Gray)
+            }
+        )
+        Row {
+            listgender.forEach{selectedJK ->
+                Row (verticalAlignment = Alignment.CenterVertically){
+                    RadioButton(selected = jeniskelamin == selectedJK,
+                        onClick = {
+                            jeniskelamin = selectedJK
+                        })
+                    Text(selectedJK)
+                }
+            }
+        }
+
+        TextField(
+            value = email,
+            onValueChange = {email = it},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
+            label = { Text("Email") },
+            placeholder = {
+                Text("Masukkan Email Anda!", color = Color.Gray)
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+        )
+
+        TextField(
+            value = nohp,
+            onValueChange = {nohp = it},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
+            label = { Text("No Handphone") },
+            placeholder = {
+                Text("Masukkan Nomer HP", color = Color.Gray)
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+
+        TextField(
+            value = alamat,
+            onValueChange = {alamat = it},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
+            label = { Text("Alamat") },
+            placeholder = {
+                Text("Masukkan Alamat Anda!", color = Color.Gray)
+            }
+        )
+
+        Button(onClick = {
+            onClickButton(listData)
+        }, modifier = Modifier.padding(vertical = 10.dp)) {
+            Text("Submit")
+        }
+    }
 }
